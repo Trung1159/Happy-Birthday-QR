@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, My Love</title>
+<meta name="description" content="Một món quà sinh nhật nhỏ, được gửi bằng tất cả yêu thương.">
+<meta property="og:title" content="Happy Birthday, My Love">
+<meta property="og:description" content="Một món quà nhỏ, gửi bằng tất cả yêu thương.">
+<meta property="og:image" content="og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Happy Birthday, My Love">
+<meta name="twitter:description" content="Một món quà nhỏ, gửi bằng tất cả yêu thương.">
+<meta name="twitter:image" content="og.png">
+<style>
+:root { --rose: #d69a9b; --blush: #f4ced0; --champagne: #f5dbad; --ink: #fff9f3; }
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+button { font: inherit; }
+body { background: #160a13; color: var(--ink); font-family: Georgia, 'Times New Roman', serif; }
+
+.birthday-page {
+  min-height: 100svh; position: relative; isolation: isolate; overflow: hidden;
+  display: grid; grid-template-rows: auto 1fr auto;
+  background: linear-gradient(180deg, rgba(18,5,13,.2), rgba(20,5,13,.5)), url('love-birthday-background.png') center 48% / cover no-repeat;
+}
+.birthday-page::before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 46%, transparent 0 18%, rgba(15,3,11,.12) 55%, rgba(10,1,7,.6) 100%); }
+.ambient { position: absolute; width: 44rem; height: 44rem; left: 50%; top: 48%; transform: translate(-50%,-50%); border-radius: 999px; z-index: -1; background: rgba(214,154,155,.08); filter: blur(80px); animation: breathe 5s ease-in-out infinite; }
+.topbar { display: flex; align-items: center; justify-content: space-between; width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 24px 0; position: relative; z-index: 10; }
+.brand-mark { display: inline-flex; align-items: center; gap: 9px; color: var(--champagne); font: italic 14px/1.2 Georgia, serif; letter-spacing: .04em; }
+.icon-button { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(245,219,173,.35); color: var(--champagne); background: rgba(41,10,25,.45); backdrop-filter: blur(12px); display: grid; place-items: center; cursor: pointer; transition: background .2s; }
+.icon-button:hover { background: rgba(41,10,25,.65); }
+.hero { display: grid; place-items: center; min-height: 0; padding: 28px 20px 54px; perspective: 1200px; }
+
+/* Envelope */
+.envelope { width: min(420px, 88vw); aspect-ratio: 1.58; border: 0; background: none; color: #5b2635; position: relative; cursor: pointer; filter: drop-shadow(0 28px 38px rgba(0,0,0,.38)); animation: float 3.4s ease-in-out infinite; }
+.envelope:focus-visible, .replay:focus-visible, .icon-button:focus-visible { outline: 2px solid var(--champagne); outline-offset: 5px; }
+.envelope-back, .envelope-front { position: absolute; inset: 0; border-radius: 10px; }
+.envelope-back { background: linear-gradient(145deg, #edd2c8, #c98788); border: 1px solid rgba(255,255,255,.45); }
+.envelope-back::before { content: ''; position: absolute; inset: 0; clip-path: polygon(0 0, 50% 59%, 100% 0); background: linear-gradient(165deg, #f5ded3, #c88588); transform-origin: top; z-index: 4; }
+.letter-preview { position: absolute; left: 9%; right: 9%; top: 11%; height: 79%; padding: 28px 20px; border-radius: 6px; background: #fff7ec; display: flex; flex-direction: column; align-items: center; gap: 9px; transition: transform .8s cubic-bezier(.2,.8,.2,1); box-shadow: 0 6px 18px rgba(77,17,40,.12); }
+.letter-preview small { text-transform: uppercase; letter-spacing: .18em; font-size: 10px; }
+.letter-preview strong { font: italic 25px/1.1 Georgia, serif; }
+.envelope-front { z-index: 3; overflow: hidden; background: linear-gradient(25deg, #cf9292 50%, transparent 50%); }
+.envelope-front::before { content: ''; position: absolute; inset: 0; background: linear-gradient(-25deg, #dca4a0 50%, transparent 50%); }
+.heart-seal { position: absolute; z-index: 5; left: 50%; top: 55%; transform: translate(-50%,-50%); width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%; color: #f8d8cf; background: radial-gradient(circle at 35% 30%, #a82d4e, #68132f 72%); box-shadow: 0 5px 13px rgba(75,9,31,.42), inset 0 1px rgba(255,255,255,.28); transition: transform .3s ease; }
+.envelope:hover .heart-seal { transform: translate(-50%,-50%) scale(1.09); }
+.envelope:hover .letter-preview { transform: translateY(-10px); }
+
+/* Message Card */
+.message-card { width: min(820px, 94vw); text-align: center; padding: clamp(28px,4.5vw,52px) clamp(22px,6vw,72px); border: 1px solid rgba(245,219,173,.28); border-radius: 32px; background: linear-gradient(145deg, rgba(49,11,29,.78), rgba(28,6,19,.58)); box-shadow: 0 36px 90px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.1); backdrop-filter: blur(15px); animation: cardIn 1s cubic-bezier(.2,.85,.2,1) both; }
+.eyebrow { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 0 0 18px; color: var(--champagne); font: 600 11px/1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: .24em; text-transform: uppercase; }
+h1 { margin: 0; }
+h1 span, h1 em { display: block; }
+h1 span { color: #fff8ee; font-size: clamp(44px,8vw,82px); line-height: .88; letter-spacing: -.055em; text-shadow: 0 4px 30px rgba(228,148,158,.35); }
+h1 em { margin-top: 10px; color: var(--blush); font-size: clamp(31px,5vw,52px); font-weight: 400; line-height: 1; }
+.wish-stage { height: 150px; margin: 30px auto 8px; position: relative; max-width: 690px; }
+.wish-stage p { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; opacity: 0; transform: translateY(15px) scale(.98); filter: blur(8px); color: #f8e8df; font-size: clamp(15px,2.2vw,19px); line-height: 1.7; text-wrap: balance; transition: opacity .75s ease, transform .75s ease, filter .75s ease; }
+.wish-stage p.active { opacity: 1; transform: none; filter: none; }
+.wish-stage p.past { opacity: 0; transform: translateY(-15px) scale(.98); filter: blur(8px); }
+.wish-navigation { height: 34px; display: flex; align-items: center; justify-content: center; gap: 13px; }
+.wish-dots { display: flex; align-items: center; gap: 7px; }
+.wish-dots button { width: 6px; height: 6px; padding: 0; border: 0; border-radius: 50%; background: rgba(245,219,173,.28); cursor: pointer; transition: width .3s ease, border-radius .3s ease, background .3s ease; }
+.wish-dots button.active { width: 22px; border-radius: 99px; background: var(--champagne); }
+.wish-arrow { width: 30px; height: 30px; padding: 0; display: grid; place-items: center; border: 1px solid rgba(245,219,173,.22); border-radius: 50%; color: var(--champagne); background: rgba(255,255,255,.03); cursor: pointer; }
+.wish-arrow:disabled { opacity: .22; cursor: default; }
+.signature { min-height: 73px; margin-top: 6px; display: flex; flex-direction: column; align-items: center; gap: 3px; opacity: 0; transform: translateY(12px); transition: .9s ease .8s; color: var(--champagne); font-style: italic; }
+.signature.visible { opacity: 1; transform: none; }
+.signature strong { font-weight: 400; }
+.signature .heart-icon { margin-top: 7px; color: #e18a98; animation: heartbeat 1.6s infinite; }
+.replay { margin-top: 22px; padding: 10px 16px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(245,219,173,.3); border-radius: 999px; color: var(--champagne); background: rgba(255,255,255,.04); font: 600 12px/1 ui-sans-serif, system-ui, sans-serif; cursor: pointer; }
+footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 25px; display: flex; justify-content: center; align-items: center; gap: 14px; color: rgba(255,244,232,.62); font: 500 9px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+.footer-heart { color: #d87d8c; font-size: 14px; }
+
+/* Petals */
+.petals { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 4; }
+.petals span { position: absolute; top: -8%; border-radius: 80% 0 80% 20%; background: linear-gradient(135deg, rgba(243,181,184,.9), rgba(132,27,62,.55)); filter: drop-shadow(0 2px 3px rgba(60,5,28,.25)); }
+
+/* Hidden states */
+.hero-envelope { display: grid; }
+.hero-card { display: none; }
+.is-open .hero-envelope { display: none; }
+.is-open .hero-card { display: block; }
+.music-toggle { display: none; }
+.is-open .music-toggle { display: grid; }
+
+/* Animations */
+@keyframes float { 50% { transform: translateY(-12px) rotate(.4deg); } }
+@keyframes breathe { 50% { transform: translate(-50%,-50%) scale(1.12); opacity: .65; } }
+@keyframes heartbeat { 40% { transform: scale(1.22); } }
+@keyframes cardIn { from { opacity: 0; transform: translateY(24px) scale(.96) rotateX(5deg); } }
+@keyframes petalFall { 0% { transform: translate3d(0,-10vh,0) rotate(0); opacity: 0; } 12% { opacity: .9; } 55% { transform: translate3d(45px,54vh,0) rotate(210deg); } 100% { transform: translate3d(-30px,112vh,0) rotate(430deg); opacity: 0; } }
+
+@media (max-width: 560px) {
+  .birthday-page { min-height: 100svh; overflow-y: auto; }
+  .topbar { padding-top: 16px; padding-bottom: 10px; }
+  .hero { padding: 8px 12px 24px; }
+  .message-card { border-radius: 24px; padding: 25px 18px 23px; }
+  .eyebrow { margin-bottom: 13px; }
+  .wish-stage { height: 210px; margin-top: 22px; }
+  .wish-stage p { font-size: 15px; line-height: 1.62; }
+  .signature { min-height: 96px; }
+  .replay { margin-top: 11px; }
+  footer { padding-bottom: 16px; letter-spacing: .1em; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  .petals { display: none; }
+}
+</style>
+</head>
+<body>
+
+<main class="birthday-page" id="page">
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <span class="brand-mark">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Dành riêng cho em
+    </span>
+    <button class="icon-button music-toggle" id="musicBtn" aria-label="Tắt nhạc">
+      <!-- Pause icon (playing state) -->
+      <svg id="iconPause" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      <!-- Music icon (muted state) -->
+      <svg id="iconMusic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="8" cy="18" r="4"/><path d="M12 18V2l7 4"/></svg>
+    </button>
+  </header>
+
+  <section class="hero" aria-live="polite">
+    <!-- Envelope -->
+    <div class="hero-envelope">
+      <button class="envelope" id="envelopeBtn" aria-label="Mở thiệp sinh nhật">
+        <span class="envelope-back"></span>
+        <span class="letter-preview">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          <small>Một điều bất ngờ</small>
+          <strong>chỉ dành cho em</strong>
+        </span>
+        <span class="envelope-front"></span>
+        <span class="heart-seal">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </span>
+      </button>
+    </div>
+
+    <!-- Message Card -->
+    <div class="hero-card">
+      <div class="message-card">
+        <p class="eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          Make a birthday wish
+        </p>
+        <h1><span>Happy Birthday</span><em>My Love</em></h1>
+        <div class="wish-stage" id="wishStage"></div>
+        <div class="wish-navigation" aria-label="Điều hướng lời chúc">
+          <button class="wish-arrow" id="prevBtn" aria-label="Lời chúc trước">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div class="wish-dots" id="wishDots"></div>
+          <button class="wish-arrow" id="nextBtn" aria-label="Lời chúc tiếp theo">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="signature" id="signature">
+          <span>Và điều ước riêng của anh,</span>
+          <strong>là được nhìn thấy em hạnh phúc — hôm nay và thật nhiều ngày sau nữa.</strong>
+          <svg class="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <button class="replay" id="replayBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Xem lại lời chúc
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer><span>Ngày đặc biệt của em</span><span class="footer-heart">♥</span><span>With all my love</span></footer>
+</main>
+
+<audio id="bgMusic" preload="auto" loop>
+  <source src="bgm.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+(function () {
+  const wishes = [
+    'Hôm nay không chỉ là ngày em thêm một tuổi, mà còn là ngày anh thấy biết ơn vì thế giới đã có em — một người dịu dàng, ấm áp và vô cùng đặc biệt.',
+    'Cảm ơn em đã xuất hiện, mang đến những niềm vui rất nhỏ nhưng đủ làm mọi ngày bình thường trở nên đáng nhớ, và khiến trái tim anh luôn có một nơi để mong về.',
+    'Anh mong tuổi mới sẽ đối xử với em thật dịu dàng; cho em đủ mạnh mẽ để đi qua những ngày khó khăn, đủ bình yên để tận hưởng hiện tại và đủ can đảm để theo đuổi mọi điều em mơ ước.',
+    'Nếu có lúc em mệt mỏi hay hoài nghi chính mình, hãy nhớ rằng em không cần phải hoàn hảo để được yêu thương. Với anh, em luôn xứng đáng với những điều chân thành và tốt đẹp nhất.',
+    'Anh không hứa mọi chặng đường phía trước đều dễ dàng, nhưng anh mong mình có thể ở bên để cùng em sẻ chia niềm vui, nắm tay em qua những ngày giông gió và lặng nghe cả những điều em chưa kịp nói.',
+    'Chúc mừng sinh nhật, tình yêu của anh. Mong nụ cười luôn ở trên môi em, bình an luôn ở trong tim em, và mỗi ngày mới đều cho em thêm một lý do để tin rằng cuộc đời này thật đẹp.',
+  ];
+
+  const CHORUS_START = 60;
+  const TARGET_VOLUME = 0.45;
+  const FADE_IN_MS = 2000;
+
+  const page = document.getElementById('page');
+  const envelopeBtn = document.getElementById('envelopeBtn');
+  const musicBtn = document.getElementById('musicBtn');
+  const wishStage = document.getElementById('wishStage');
+  const wishDots = document.getElementById('wishDots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const replayBtn = document.getElementById('replayBtn');
+  const signature = document.getElementById('signature');
+  const iconPause = document.getElementById('iconPause');
+  const iconMusic = document.getElementById('iconMusic');
+  const bgMusic = document.getElementById('bgMusic');
+
+  let wishIndex = 0;
+  let muted = false;
+  let autoTimer = null;
+  let fadeFrame = null;
+
+  // Build petals
+  const petalsEl = document.getElementById('petals');
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('span');
+    const left = (i * 37) % 100;
+    const delay = (i % 9) * -1.3;
+    const dur = 9 + (i % 6) * 1.4;
+    const size = 10 + (i % 4) * 4;
+    s.style.cssText = `left:${left}%;width:${size}px;height:${size * 0.68}px;animation:petalFall ${dur}s linear ${delay}s infinite;`;
+    petalsEl.appendChild(s);
+  }
+
+  // Build wish paragraphs & dots
+  wishes.forEach(function (text, i) {
+    const p = document.createElement('p');
+    p.textContent = text;
+    wishStage.appendChild(p);
+
+    const dot = document.createElement('button');
+    dot.setAttribute('aria-label', 'Lời chúc ' + (i + 1));
+    dot.addEventListener('click', function () { goTo(i); });
+    wishDots.appendChild(dot);
+  });
+
+  function updateWish() {
+    const paragraphs = wishStage.querySelectorAll('p');
+    const dots = wishDots.querySelectorAll('button');
+    paragraphs.forEach(function (p, i) {
+      p.className = i === wishIndex ? 'active' : i < wishIndex ? 'past' : '';
+    });
+    dots.forEach(function (d, i) {
+      d.className = i === wishIndex ? 'active' : '';
+    });
+    prevBtn.disabled = wishIndex === 0;
+    nextBtn.disabled = wishIndex === wishes.length - 1;
+    signature.className = wishIndex === wishes.length - 1 ? 'signature visible' : 'signature';
+  }
+
+  function goTo(index) {
+    wishIndex = Math.max(0, Math.min(wishes.length - 1, index));
+    updateWish();
+    restartAutoAdvance();
+  }
+
+  function restartAutoAdvance() {
+    clearTimeout(autoTimer);
+    if (wishIndex < wishes.length - 1) {
+      autoTimer = setTimeout(function () {
+        wishIndex++;
+        updateWish();
+        restartAutoAdvance();
+      }, 6500);
+    }
+  }
+
+  // Fade in music
+  function fadeIn() {
+    if (fadeFrame) cancelAnimationFrame(fadeFrame);
+    var start = performance.now();
+    bgMusic.volume = 0;
+    function tick() {
+      var elapsed = performance.now() - start;
+      var progress = Math.min(elapsed / FADE_IN_MS, 1);
+      bgMusic.volume = TARGET_VOLUME * (1 - Math.pow(1 - progress, 2));
+      if (progress < 1) fadeFrame = requestAnimationFrame(tick);
+    }
+    fadeFrame = requestAnimationFrame(tick);
+  }
+
+  function playMusic() {
+    bgMusic.currentTime = CHORUS_START;
+    bgMusic.play().then(fadeIn).catch(function () {});
+  }
+
+  function toggleMute() {
+    muted = !muted;
+    if (muted) {
+      bgMusic.pause();
+      iconPause.style.display = 'none';
+      iconMusic.style.display = 'block';
+      musicBtn.setAttribute('aria-label', 'Bật nhạc');
+    } else {
+      bgMusic.play().then(fadeIn).catch(function () {});
+      iconPause.style.display = 'block';
+      iconMusic.style.display = 'none';
+      musicBtn.setAttribute('aria-label', 'Tắt nhạc');
+    }
+  }
+
+  // Open envelope
+  envelopeBtn.addEventListener('click', function () {
+    page.classList.add('is-open');
+    wishIndex = 0;
+    muted = false;
+    updateWish();
+    restartAutoAdvance();
+    playMusic();
+  });
+
+  prevBtn.addEventListener('click', function () { goTo(wishIndex - 1); });
+  nextBtn.addEventListener('click', function () { goTo(wishIndex + 1); });
+  replayBtn.addEventListener('click', function () { goTo(0); });
+  musicBtn.addEventListener('click', toggleMute);
+
+  updateWish();
+})();
+</script>
+</body>
+</html>
