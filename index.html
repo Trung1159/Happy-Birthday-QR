@@ -54,14 +54,18 @@ h1 { margin: 0; }
 h1 span, h1 em { display: block; }
 h1 span { color: #fff8ee; font-size: clamp(44px,8vw,82px); line-height: .88; letter-spacing: -.055em; text-shadow: 0 4px 30px rgba(228,148,158,.35); }
 h1 em { margin-top: 10px; color: var(--blush); font-size: clamp(31px,5vw,52px); font-weight: 400; line-height: 1; }
-.wish-stage { height: 150px; margin: 30px auto 8px; position: relative; max-width: 690px; }
-.wish-stage p { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; opacity: 0; transform: translateY(15px) scale(.98); filter: blur(8px); color: #f8e8df; font-size: clamp(15px,2.2vw,19px); line-height: 1.7; text-wrap: balance; transition: opacity .75s ease, transform .75s ease, filter .75s ease; }
+.wish-stage { min-height: 150px; display: grid; margin: 30px auto 8px; position: relative; max-width: 690px; }
+.wish-stage p { grid-area: 1 / 1; margin: 0; display: grid; place-items: center; opacity: 0; pointer-events: none; transform: translateY(15px) scale(.98); filter: blur(8px); color: #f8e8df; font-size: clamp(15px,2.2vw,19px); line-height: 1.7; text-wrap: balance; transition: opacity .75s ease, transform .75s ease, filter .75s ease; }
 .wish-stage p.active { opacity: 1; transform: none; filter: none; }
 .wish-stage p.past { opacity: 0; transform: translateY(-15px) scale(.98); filter: blur(8px); }
 .wish-navigation { height: 34px; display: flex; align-items: center; justify-content: center; gap: 13px; }
-.wish-dots { display: flex; align-items: center; gap: 7px; }
-.wish-dots button { width: 6px; height: 6px; padding: 0; border: 0; border-radius: 50%; background: rgba(245,219,173,.28); cursor: pointer; transition: width .3s ease, border-radius .3s ease, background .3s ease; }
-.wish-dots button.active { width: 22px; border-radius: 99px; background: var(--champagne); }
+.wish-dots { display: flex; align-items: center; gap: 0; }
+.wish-dots button { width: 26px; height: 34px; padding: 0; border: 0; display: grid; place-items: center; background: transparent; cursor: pointer; }
+.wish-dots button::before { content: ''; width: 6px; height: 6px; border-radius: 99px; background: rgba(245,219,173,.28); transition: width .3s ease, background .3s ease; }
+.wish-dots button.active::before { width: 22px; background: var(--champagne); }
+.reading-toggle { margin: 6px 0; min-height: 36px; padding: 8px 12px; border: 0; background: transparent; color: var(--champagne); font: 500 12px/1.4 ui-sans-serif, system-ui, sans-serif; cursor: pointer; }
+.reading-toggle:disabled { visibility: hidden; }
+.wish-arrow:focus-visible, .wish-dots button:focus-visible, .reading-toggle:focus-visible { outline: 2px solid var(--champagne); outline-offset: 3px; }
 .wish-arrow { width: 30px; height: 30px; padding: 0; display: grid; place-items: center; border: 1px solid rgba(245,219,173,.22); border-radius: 50%; color: var(--champagne); background: rgba(255,255,255,.03); cursor: pointer; }
 .wish-arrow:disabled { opacity: .22; cursor: default; }
 .signature { min-height: 73px; margin-top: 6px; display: flex; flex-direction: column; align-items: center; gap: 3px; opacity: 0; transform: translateY(12px); transition: .9s ease .8s; color: var(--champagne); font-style: italic; }
@@ -97,14 +101,14 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
   .hero { padding: 8px 12px 24px; }
   .message-card { border-radius: 24px; padding: 25px 18px 23px; }
   .eyebrow { margin-bottom: 13px; }
-  .wish-stage { height: 210px; margin-top: 22px; }
+  .wish-stage { min-height: 210px; margin-top: 22px; }
   .wish-stage p { font-size: 15px; line-height: 1.62; }
   .signature { min-height: 96px; }
   .replay { margin-top: 11px; }
   footer { padding-bottom: 16px; letter-spacing: .1em; gap: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
+  *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
   .petals { display: none; }
 }
 </style>
@@ -128,7 +132,7 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
     </button>
   </header>
 
-  <section class="hero" aria-live="polite">
+  <section class="hero">
     <!-- Envelope -->
     <div class="hero-envelope">
       <button class="envelope" id="envelopeBtn" aria-label="Mở thiệp sinh nhật">
@@ -153,7 +157,7 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
           Make a birthday wish
         </p>
         <h1><span>Happy Birthday</span><em>My Love</em></h1>
-        <div class="wish-stage" id="wishStage"></div>
+        <div class="wish-stage" id="wishStage" aria-live="off" aria-atomic="true"></div>
         <div class="wish-navigation" aria-label="Điều hướng lời chúc">
           <button class="wish-arrow" id="prevBtn" aria-label="Lời chúc trước">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -163,7 +167,8 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
           </button>
         </div>
-        <div class="signature" id="signature">
+        <button class="reading-toggle" id="readingToggle" aria-pressed="false">Dừng lại để đọc chậm</button>
+        <div class="signature" id="signature" aria-hidden="true">
           <span>Và điều ước riêng của anh,</span>
           <strong>là được nhìn thấy em hạnh phúc — hôm nay và thật nhiều ngày sau nữa.</strong>
           <svg class="heart-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -206,6 +211,7 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
   const replayBtn = document.getElementById('replayBtn');
+  const readingToggle = document.getElementById('readingToggle');
   const signature = document.getElementById('signature');
   const iconPause = document.getElementById('iconPause');
   const iconMusic = document.getElementById('iconMusic');
@@ -214,6 +220,7 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
   let wishIndex = 0;
   let muted = false;
   let autoTimer = null;
+  let autoAdvance = true;
   let fadeFrame = null;
 
   // Build petals
@@ -245,16 +252,26 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
     const dots = wishDots.querySelectorAll('button');
     paragraphs.forEach(function (p, i) {
       p.className = i === wishIndex ? 'active' : i < wishIndex ? 'past' : '';
+      p.setAttribute('aria-hidden', String(i !== wishIndex));
     });
     dots.forEach(function (d, i) {
       d.className = i === wishIndex ? 'active' : '';
+      if (i === wishIndex) d.setAttribute('aria-current', 'step');
+      else d.removeAttribute('aria-current');
     });
     prevBtn.disabled = wishIndex === 0;
     nextBtn.disabled = wishIndex === wishes.length - 1;
     signature.className = wishIndex === wishes.length - 1 ? 'signature visible' : 'signature';
+    signature.setAttribute('aria-hidden', String(wishIndex !== wishes.length - 1));
+    wishStage.setAttribute('aria-live', autoAdvance ? 'off' : 'polite');
+    readingToggle.textContent = autoAdvance ? 'Dừng lại để đọc chậm' : 'Tiếp tục chuyển lời chúc';
+    readingToggle.setAttribute('aria-pressed', String(!autoAdvance));
+    readingToggle.disabled = wishIndex === wishes.length - 1;
   }
 
   function goTo(index) {
+    autoAdvance = false;
+    wishStage.setAttribute('aria-live', 'polite');
     wishIndex = Math.max(0, Math.min(wishes.length - 1, index));
     updateWish();
     restartAutoAdvance();
@@ -262,12 +279,12 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
 
   function restartAutoAdvance() {
     clearTimeout(autoTimer);
-    if (wishIndex < wishes.length - 1) {
+    if (autoAdvance && wishIndex < wishes.length - 1) {
       autoTimer = setTimeout(function () {
         wishIndex++;
         updateWish();
         restartAutoAdvance();
-      }, 6500);
+      }, 14000);
     }
   }
 
@@ -317,7 +334,17 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
 
   prevBtn.addEventListener('click', function () { goTo(wishIndex - 1); });
   nextBtn.addEventListener('click', function () { goTo(wishIndex + 1); });
-  replayBtn.addEventListener('click', function () { goTo(0); });
+  replayBtn.addEventListener('click', function () {
+    wishIndex = 0;
+    autoAdvance = true;
+    updateWish();
+    restartAutoAdvance();
+  });
+  readingToggle.addEventListener('click', function () {
+    autoAdvance = !autoAdvance;
+    updateWish();
+    restartAutoAdvance();
+  });
   musicBtn.addEventListener('click', toggleMute);
 
   updateWish();
