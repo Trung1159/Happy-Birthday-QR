@@ -300,16 +300,23 @@ footer { width: min(1160px, calc(100% - 40px)); margin: 0 auto; padding: 18px 0 
     restartAutoAdvance();
   }
 
-  /** Calculate reading time based on text length: ~75ms per char, clamped 5s–12s */
-  function getReadingDuration(text) {
-    var base = Math.round(text.length * 75);
-    return Math.max(5000, Math.min(12000, base));
-  }
+  /**
+   * Per-wish durations (ms) synced to musical phrases of "Ngày Hạnh Phúc" (~128 BPM).
+   * One 4-bar phrase ≈ 7.5s. Total ≈ 45s — fits one full chorus+verse section.
+   */
+  var wishDurations = [
+    7500,  // Wish 1 — 4 bars: intro feeling, moderate length
+    7500,  // Wish 2 — 4 bars: builds emotion
+    8000,  // Wish 3 — slightly longer, this wish is the longest text
+    7000,  // Wish 4 — shorter text, slightly faster
+    8000,  // Wish 5 — long heartfelt wish, give more time
+    0,     // Wish 6 — last wish, stays (no auto-advance)
+  ];
 
   function restartAutoAdvance() {
     clearTimeout(autoTimer);
     if (autoAdvance && wishIndex < wishes.length - 1) {
-      var duration = getReadingDuration(wishes[wishIndex]);
+      var duration = wishDurations[wishIndex] || 7500;
       autoTimer = setTimeout(function () {
         wishIndex++;
         updateWish();
